@@ -183,6 +183,6 @@ LaravelSimpleApiToken::destroy($request);
 ## Support & Donation
 Hi thanks for using my open source project, you could support me via :
 [https://saweria.co/ferryariawan](https://saweria.co/ferryariawan)
-
+or via [https://buymeacoffee.com/ferryariawan](https://buymeacoffee.com/ferryariawan)
 ## Security Issue
 If you found any security issue please contact me at ferdevelop15[at]gmail.com
