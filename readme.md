@@ -24,7 +24,7 @@ php artisan migrate
 
 After installation is done, then run bellow command to export configuration file : 
 ```bash 
-php artisan vendor:publish --provider=LaravelApiToken\LaravelSimpleApiTokenServiceProvider
+php artisan vendor:publish --provider=FherryFherry\LaravelApiToken\LaravelSimpleApiTokenServiceProvider
 ```
 
 ## Configuration
