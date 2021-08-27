@@ -57,7 +57,7 @@ return [
 You should create your own Login API. Then after the login is succeeded you could call this helper.
 For the first, add these bellow to top of the class
 ```php 
-use LaravelApiToken\LaravelSimpleApiToken;
+use FherryFherry\LaravelApiToken\Helper\LaravelSimpleApiToken;
 ```
 Then in your login method would be like these
 ```php 
@@ -74,6 +74,17 @@ public function postLogin(Request $request) {
        
     // ...
 }
+```
+
+## Secure Your API With Token
+To prevent any user hit your API Without token, so you have to add `laravel_api_token` middleware to your API Route. 
+Open your API route location (I assume you use routes/api.php)
+```php 
+Route::middleware(['api','laravel_api_token'])->group(function() {
+    // place your all api routes here
+    // ...
+    
+});
 ```
 
 ## Get Current User ID

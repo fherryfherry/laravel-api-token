@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelApiToken\Middleware;
+namespace FherryFherry\LaravelApiToken\Middleware;
 
 use Closure;
+use FherryFherry\LaravelApiToken\Helper\LaravelSimpleApiToken;
 use Illuminate\Http\Request;
-use LaravelApiToken\LaravelSimpleApiToken;
 
 class ApiTokenMiddleware
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelApiToken;
+namespace FherryFherry\LaravelApiToken\Helper;
 
-use App\Models\LaravelApiToken;
+use FherryFherry\Models\LaravelApiToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 

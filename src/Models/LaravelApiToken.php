@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace FherryFherry\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

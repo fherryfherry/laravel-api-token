@@ -27,7 +27,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelApiToken\\LaravelSimpleApiTokenServiceProvider"
+                "FherryFherry\\LaravelApiToken\\LaravelSimpleApiTokenServiceProvider"
             ]
         }
     }
