@@ -1,0 +1,34 @@
+{
+    "name": "fherryfherry/laravel-api-token",
+    "description": "Make a tokenize for our API in Laravel is never been easy",
+    "type": "library",
+    "license": "MIT",
+    "keywords":[
+        "laravel",
+        "api",
+        "authentication",
+        "token"
+    ],
+    "authors": [
+        {
+            "name": "Ferry Ariawan",
+            "email": "ferdevelop15@gmail.com",
+            "homepage": "https://ferryariawan.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php":"^7.4|^8.0"
+    },
+     "require-dev": {
+        "laravel/framework": "^6.0|^7.0|^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelApiToken\\LaravelSimpleApiTokenServiceProvider"
+            ]
+        }
+    }
+}
