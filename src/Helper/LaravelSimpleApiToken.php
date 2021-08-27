@@ -36,7 +36,7 @@ class LaravelSimpleApiToken
             if($cache = cache()->get(md5("laravel_api_token".$bearer))) {
                 $tokenData = $cache;
             } else {
-                $tokenData = LaravelApiToken::query()->where("token",$bearer)
+                $tokenData = LaravelApiToken::query()->where("access_token",$bearer)
                     ->where("expired_at",">",now()->format("Y-m-d H:i:s"))
                     ->first();
                 if($tokenData) {
@@ -78,15 +78,21 @@ class LaravelSimpleApiToken
      * @param Request $request
      * @return LaravelApiToken
      */
-    public static function generateToken(Request $request)
+    public static function generateToken(Request $request, $renew = false)
     {
         $token = Str::random(config("laravel_simple_api_token.token_length", 128));
         $token = base64_encode($token);
+        $refreshToken = Str::random(config("laravel_simple_api_token.token_length", 128));
+        $refreshToken = base64_encode($refreshToken);
 
         $expiryUnit = config("laravel_simple_api_token.expiry_unit", 3);
         $expiryDuration = config("laravel_simple_api_token.expiry_duration", 60);
 
-        $tokenModel = new LaravelApiToken();
+        if($renew) {
+            $tokenModel = static::getTokenData($request);
+        } else {
+            $tokenModel = new LaravelApiToken();
+        }
 
         switch ($expiryUnit) {
             case "day":
@@ -102,7 +108,8 @@ class LaravelSimpleApiToken
 
         $tokenModel->ip_address = $request->ip();
         $tokenModel->user_agent = $request->userAgent();
-        $tokenModel->token = $token;
+        $tokenModel->access_token = $token;
+        $tokenModel->refresh_token = $refreshToken;
         $tokenModel->save();
 
         return $tokenModel;
@@ -112,7 +119,7 @@ class LaravelSimpleApiToken
     {
         $bearer = static::getBearerToken($request);
         if($bearer) {
-            $data = LaravelApiToken::query()->where("token", $bearer)->first();
+            $data = LaravelApiToken::query()->where("access_token", $bearer)->first();
             $data->users_id = $id;
             $data->users_name = $name;
             $data->users_role = $role;
@@ -128,7 +135,7 @@ class LaravelSimpleApiToken
         $bearer = static::getBearerToken($request);
         if($bearer) {
             cache()->forget(md5("laravel_api_token".$bearer));
-            LaravelApiToken::query()->where("token", $bearer)->delete();
+            LaravelApiToken::query()->where("access_token", $bearer)->delete();
             return true;
         } else {
             return false;
@@ -139,7 +146,7 @@ class LaravelSimpleApiToken
     {
         $bearer = static::getBearerToken($request);
         if($bearer) {
-            return LaravelApiToken::query()->where("token", $bearer)->first();
+            return LaravelApiToken::query()->where("access_token", $bearer)->first();
         } else {
             return null;
         }

@@ -21,7 +21,8 @@ class ApiAuthController extends Controller
                 'message'=>'success',
                 'data'=> [
                     'expired_at'=> date("c", strtotime($tokenData->expired_at)),
-                    'token'=> $tokenData->token
+                    'access_token'=> $tokenData->access_token,
+                    'refresh_token'=> $tokenData->refresh_token
                 ]
             ]);
         } else {
@@ -30,6 +31,22 @@ class ApiAuthController extends Controller
                 'message'=>'invalid credential'
             ],400);
         }
+    }
+
+
+    public function postRefreshToken(\Illuminate\Http\Request $request)
+    {
+        $tokenData = LaravelSimpleApiToken::generateToken($request, true);
+
+        return response()->json([
+            'status'=>1,
+            'message'=>'success',
+            'data'=> [
+                'expired_at'=> date("c", strtotime($tokenData->expired_at)),
+                'access_token'=> $tokenData->access_token,
+                'refresh_token'=> $tokenData->refresh_token
+            ]
+        ]);
     }
 
 

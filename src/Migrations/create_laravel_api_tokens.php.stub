@@ -18,7 +18,8 @@ class CreateLaravelApiTokens extends Migration
                 $table->id();
                 $table->timestamps();
                 $table->dateTime("expired_at");
-                $table->string("token", 500)->unique();
+                $table->string("access_token", 500)->unique();
+                $table->string("refresh_token", 500)->unique();
                 $table->string("user_agent")->nullable();
                 $table->string("ip_address")->nullable();
                 $table->integer("users_id")->nullable();

@@ -53,6 +53,14 @@ return [
 ];
 ```
 
+## Setting .ENV
+Open the `.env` file, and paste these bellow on the bottom of file 
+```bash 
+BASIC_AUTH_USER="example"
+BASIC_AUTH_PASS="123456"
+```
+You could change its value.
+
 ## Save User Data Into Token
 You should create your own Login API. Then after the login is succeeded you could call this helper.
 For the first, add these bellow to top of the class
@@ -76,6 +84,56 @@ public function postLogin(Request $request) {
 }
 ```
 
+## Request Token Endpoint
+Give this endpoint to your frontend engineer. (I assume you use artisan serve, instead adjust the base domain)
+``` 
+http://localhost:8080/api/auth/request-token
+```
+Add header parameter with *Basic Authorization*.
+
+How to use *Basic Authorization* you could refer this document. 
+[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
+
+This API will produce like these bellow : 
+```json 
+{
+    "status": 1,
+    "message": "success",
+    "data": {
+        "expired_at": "2013-05-05T16:34:42+00:00",
+        "access_token": "bG9yZW0gaXBzdW0=",
+        "refresh_token": "bG9yZW0gaXBzdW0="
+    }
+}
+```
+Frontend engineer should save the `expired_at`,`access_token`,`refresh_token` value.
+
+## Refresh Token Endpoint
+This API is to extend the expired time of `access_token` without request token again. But you will get new `access_token`,`refresh_token`,`expired_at`. 
+The difference with Request Token is you don't need to hit the Login API again.
+``` 
+http://localhost:8080/api/auth/refresh-token
+```
+
+Frontend engineer need to add a *Header Parameter* with *Bearer Authorization*
+```bash 
+Authorization: Bearer {access_token}
+```
+
+This API will produce like these bellow :
+```json 
+{
+    "status": 1,
+    "message": "success",
+    "data": {
+        "expired_at": "2013-05-05T16:34:42+00:00",
+        "access_token": "bG9yZW0gaXBzdW0=",
+        "refresh_token": "bG9yZW0gaXBzdW0="
+    }
+}
+```
+Frontend engineer should save the `expired_at`,`access_token`,`refresh_token` value. For next header authorization.
+
 ## Secure Your API With Token
 To prevent any user hit your API Without token, so you have to add `laravel_api_token` middleware to your API Route. 
 Open your API route location (I assume you use routes/api.php)
@@ -85,6 +143,10 @@ Route::middleware(['api','laravel_api_token'])->group(function() {
     // ...
     
 });
+```
+Frontend engineer need to add a *Header Parameter* with *Bearer Authorization*
+```bash 
+Authorization: Bearer {access_token}
 ```
 
 ## Get Current User ID
