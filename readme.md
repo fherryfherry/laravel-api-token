@@ -1,6 +1,6 @@
 # Laravel Simple API Token
 
-This library is to Tokenize your current API Restful. It makes your API more secure. 
+This library is to Tokenize your current API Restful very easy. It makes your API more secure. 
 
 How this library works : 
 1. It will create table `laravel_api_tokens`
